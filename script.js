@@ -10,24 +10,36 @@ let api_key = "b6adf82c797800cb01ae16288a92347d";
 //   ul.classList.add("bg");
 // });
 // let tv = document.getElementById("tv");
-var container = document.getElementsByClassName("container");
-let url;
+// let url;
 let i = 1;
-url = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
+let condition;
+let searchurl= `https://api.themoviedb.org/3/search/movie?&api_key=b6adf82c797800cb01ae16288a92347d&page=${i}&query=`;
+apiurl = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
 
 
-  fetchData();
+  fetchData(apiurl);
   let more = document.querySelector("#showMore");
-  more.addEventListener("click", showMore);
+  more.addEventListener("click", () => showMore(condition));
 
-  function showMore() {
-    i++;
-    url = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
-    fetchData();
+  condition="api";
+
+  function showMore(x) {
+    if (x=="api"){
+        i++;
+        apiurl = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
+        fetchData(apiurl);
+    }
+    if (x=="search"){
+        i++;
+        // let searchTerm = search.value;
+        searchurl= `https://api.themoviedb.org/3/search/movie?&api_key=b6adf82c797800cb01ae16288a92347d&page=${i}&query=`;
+        fetchData(searchurl+searchTerm);
+    }
+    
     console.log(i)
   }
 
-function fetchData() {
+function fetchData(url) {
   fetch(url)
     .then((response) => {
       if (!response.ok) {
@@ -46,8 +58,13 @@ function fetchData() {
       showMovies();
 
       function showMovies() {
+        if (i==1){
+            container.innerHTML =" ";
+          }
         for (var j = 0; j < myLen; j++) {
           let movie = movies.results[j];
+          let number=movie.vote_average;
+          let roundno=numb = number.toFixed(1);
           container.innerHTML += `<div class="box">
       <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="img" />
   <div class="moviesDetails">
@@ -55,7 +72,7 @@ function fetchData() {
       <h5>${movie.original_title}</h5>
       <p>${movie.release_date}</p>
     </div>
-    <div class="rightDetails rating">${movie.vote_average}</div>
+    <div class="${getClassByRate(movie.vote_average)}">${roundno}</div>
   </div>
 </div>`;
         }
@@ -66,3 +83,37 @@ function fetchData() {
       console.log(error);
     });
 }
+
+function getClassByRate(vote) {
+    if (vote >= 8) {
+      return 'green';
+    } else if (vote >= 5) {
+      return 'orange'
+    } else {
+      return 'red';
+    }
+  }
+  let searchTerm;
+form.addEventListener("submit", (e) => {
+    i=1;
+    e.preventDefault();
+    searchTerm = search.value;
+    if (searchTerm) {
+        
+        condition="search";
+        i=1;
+        searchurl= `https://api.themoviedb.org/3/search/movie?&api_key=b6adf82c797800cb01ae16288a92347d&page=${i}&query=`;
+        fetchData(searchurl+searchTerm);
+      search.value = "";
+    }
+    if (!searchTerm){
+        condition="api"
+        i=1;
+        apiurl = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
+        fetchData(apiurl);
+    }
+  });
+
+//   function clearContents(){
+//     $('.box').html('');  // or $('.content-board').html('');
+//  }
