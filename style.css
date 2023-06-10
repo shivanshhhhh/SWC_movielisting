@@ -337,14 +337,14 @@ ul.active{
     background-color: black;
 }
 #add-btn.active{
-    background-color: peachpuff;
+    background-color: rgb(248, 225, 228);
     color:black;
 }
 .button.active{
     background-color: black;
 }
 #showMore.active{
-    background: peachpuff;
+    background: rgb(248, 225, 228);
     /* color: rgb(50, 50, 50); */
     color: black;
     /* border: none; */
