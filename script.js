@@ -13,6 +13,8 @@ let api_key = "b6adf82c797800cb01ae16288a92347d";
 // let url;
 let i = 1;
 let condition;
+let press;
+press="gome";
 let searchurl= `https://api.themoviedb.org/3/search/movie?&api_key=b6adf82c797800cb01ae16288a92347d&page=${i}&query=`;
 apiurl = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
 
@@ -61,18 +63,26 @@ function fetchData(url) {
         if (i==1){
             container.innerHTML =" ";
           }
+          if (press=="home"){
+            container.innerHTML =" ";
+            press="gome";
+          }
         for (var j = 0; j < myLen; j++) {
           let movie = movies.results[j];
           let number=movie.vote_average;
           let roundno=numb = number.toFixed(1);
           container.innerHTML += `<div class="box">
-      <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="img" />
+      <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="image did not load" />
   <div class="moviesDetails">
     <div class="leftDetails">
       <h5>${movie.original_title}</h5>
       <p>${movie.release_date}</p>
     </div>
-    <div class="${getClassByRate(movie.vote_average)}">${roundno}</div>
+    <div class="overview" style="color:black">
+                <h3>Overview</h3>
+                <p>${movie.overview}</p> 
+            </div>
+    <div class="${getColorByRating(movie.vote_average)}">${roundno}</div>
   </div>
 </div>`;
         }
@@ -84,7 +94,7 @@ function fetchData(url) {
     });
 }
 
-function getClassByRate(vote) {
+function getColorByRating(vote) {
     if (vote >= 8) {
       return 'green';
     } else if (vote >= 5) {
@@ -117,3 +127,25 @@ form.addEventListener("submit", (e) => {
 //   function clearContents(){
 //     $('.box').html('');  // or $('.content-board').html('');
 //  }
+
+const ball = document.querySelector(".toggle-ball");
+const items = document.querySelectorAll(
+  "a,body,.container,.moviesDetails,.leftDetails,#navbar,header,.search,.search-btn,.title,ul,.overview,#add-btn,.button,#showMore,.toggle"
+);
+
+ball.addEventListener("click", () => {
+  items.forEach((item) => {
+    item.classList.toggle("active");
+  });
+  ball.classList.toggle("active");
+});
+let home = document.querySelector("#Home");
+  home.addEventListener("click", Home);
+
+  function Home(){
+    press="home";
+    i=1;
+    condition="api"
+        apiurl = `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${i}`;
+    fetchData(apiurl);
+  }
