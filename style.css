@@ -187,7 +187,7 @@ img{
     width: 180px;
     border-radius: 10px;
     /* text-align: bottom; */
-    border: 1px solid white;
+    border: 1px solid rgb(248, 177, 186);
     position: absolute;
 }
 hr{
@@ -298,6 +298,7 @@ body.active{
 .container.active{
     background-color: black;
   }
+
   
 .moviesDetails.active{
     color: white;
