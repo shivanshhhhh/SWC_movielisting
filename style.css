@@ -170,7 +170,7 @@ li:hover{
 .moviesDetails{
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 260px;
 }
 .leftDetails{
     font-family: "sofia", sans-serif;
@@ -188,6 +188,7 @@ img{
     border-radius: 10px;
     /* text-align: bottom; */
     border: 1px solid white;
+    position: absolute;
 }
 hr{
     margin: 10px 0;
@@ -213,6 +214,7 @@ hr{
     cursor: pointer;
 }
 .box:hover {
+    /* opacity: 0.5; */
     transform: scale(1.06);
 }
 .box{
@@ -277,6 +279,7 @@ h3{
     padding: 15px;
     /* max-height: 100%; */
     /* transition:transform 0.3s ease-in; */
+
 }
 
 
